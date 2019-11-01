@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
+// using System.IO;
 using Newtonsoft.Json;
 
 namespace Task
@@ -9,11 +9,8 @@ namespace Task
     {
         static void Main(string[] args)
         {
-            var Jobs = new List<Job>();
-            if (File.Exists("Test.json"))
-            {
-                Jobs = JsonConvert.DeserializeObject<List<Job>>(File.ReadAllText("Test.json"));
-            }
+            var Files = new Files();
+            var Jobs = Files.FileCheck();
             var Actions = new Actions(Jobs);
             var answer = 0;
             do
@@ -28,11 +25,7 @@ namespace Task
                     case 1:
                         {
                             Actions.Add();
-                            using (StreamWriter file = File.CreateText("Test.json"))
-                            {
-                                JsonSerializer serializer = new JsonSerializer();
-                                serializer.Serialize(file, Jobs);
-                            }
+                            Files.WriteToFile(Jobs);
                             break;
                         }
                     case 2:
