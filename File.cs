@@ -19,9 +19,9 @@ namespace Task
             else System.Console.WriteLine("Файл не найден\nно будет создан при создании задачи\n");
             return _jobs;
         }
-        public void WriteToFile(List<Job> _Jobs)
+        public void WriteToFile(List<Job> _jobs)
         {
-            File.WriteAllText("Test.json", JsonConvert.SerializeObject(_Jobs));
+            File.WriteAllText("Test.json", JsonConvert.SerializeObject(_jobs));
         }
     }
 }
