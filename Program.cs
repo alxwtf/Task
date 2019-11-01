@@ -10,7 +10,7 @@ namespace Task
         static void Main(string[] args)
         {
             var Files = new Files();
-            var Jobs = Files.FileCheck();
+            var Jobs = Files.GetJobList();
             var Actions = new Actions(Jobs);
             var answer = 0;
             do

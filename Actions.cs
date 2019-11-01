@@ -6,11 +6,11 @@ namespace Task
 {
     class Actions
     {
-        private List<Job> _Jobs;
+        private List<Job> _jobs;
 
         public Actions(List<Job> Jobs)
         {
-            _Jobs = Jobs;
+            _jobs = Jobs;
         }
 
         public void Add()
@@ -26,7 +26,7 @@ namespace Task
             var CreationDate = DateTime.Now.Date;
             System.Console.WriteLine("Введите дату завершения");
             DateTime? Date = DateTime.Parse(Console.ReadLine());
-            _Jobs.Add(new Job()
+            _jobs.Add(new Job()
             {
                 id = id,
                 Name = Name,
@@ -76,7 +76,7 @@ namespace Task
                     {
                         Console.WriteLine("Введите название Задачи");
                         var name = Console.ReadLine();
-                        var query = _Jobs.Where(x => x.Name == name).ToList();
+                        var query = _jobs.Where(x => x.Name == name).ToList();
                         if (query.Count() != 0) History(query);
                         else Console.WriteLine("Задачи не найдены");
                         break;
@@ -85,7 +85,7 @@ namespace Task
                     {
                         Console.WriteLine("Введите Тэг(и)");
                         var tags = Console.ReadLine();
-                        var query = _Jobs.Where(x => x.Tag.Contains(tags)).ToList();
+                        var query = _jobs.Where(x => x.Tag.Contains(tags)).ToList();
                         if (query.Count() != 0) History(query);
                         else Console.WriteLine("Задачи не найдены");
                         break;
@@ -96,44 +96,27 @@ namespace Task
         public void TaskInfo()
         {
             Console.Clear();
-            if (_Jobs.Count() != 0)
+            if (_jobs.Count() != 0)
             {
-                Console.WriteLine($"Введите номер задачи от 0 до {_Jobs.Count() - 1}");
+                Console.WriteLine($"Введите номер задачи от 0 до {_jobs.Count() - 1}");
                 int.TryParse(Console.ReadLine(), out var tasknum);
-                var query = _Jobs[tasknum];
-                if (query != null)
-                {
-                    Console.Write("ID:");
-                    Console.WriteLine(query.id);
-                    Console.Write("Название задачи:");
-                    Console.WriteLine(query.Name);
-                    Console.WriteLine("Описание задачи:");
-                    Console.WriteLine(query.Description);
-                    Console.WriteLine("Тэги:");
-                    Console.WriteLine(query.Tag);
-                    Console.Write("Дата создания:");
-                    Console.WriteLine(query.CreationDate);
-                    if (query.Date != null)
-                    {
-                        Console.Write("Дата завершения:");
-                        Console.WriteLine(query.Date);
-                    }
-                }
+                var query = _jobs.Where((x, idx) => idx == tasknum).ToList();
+                History(query);
             }
             else Console.WriteLine("Задач на данный момент нет");
         }
         public void setTag()
         {
             Console.Clear();
-            if (_Jobs.Count != 0)
+            if (_jobs.Count != 0)
             {
-                History(_Jobs);
-                Console.WriteLine($"Введите индекс задачи от 0 до {_Jobs.Count() - 1}");
+                History(_jobs);
+                Console.WriteLine($"Введите индекс задачи от 0 до {_jobs.Count() - 1}");
                 var numb = int.TryParse(Console.ReadLine(), out var num);
                 if (numb)
                 {
                     Console.WriteLine("Введите новые тэги через пробел");
-                    _Jobs[num].Tag = Console.ReadLine();
+                    _jobs[num].Tag = Console.ReadLine();
                 }
                 else { Console.Clear(); System.Console.WriteLine("Попробуйте снова\nвозможно вы оставили ввод пустым или ввели буквы\n"); }
             }
@@ -142,7 +125,7 @@ namespace Task
         public void DeleteTask()
         {
             Console.Clear();
-            var query = _Jobs.Select((x, i) => new { Index = i, x.Name, x.Description }).ToList();
+            var query = _jobs.Select((x, i) => new { Index = i, x.Name, x.Description }).ToList();
             if (query.Count != 0)
             {
                 foreach (var job in query)
@@ -161,7 +144,7 @@ namespace Task
                         var isNumb = int.TryParse(ind, out var n);
                         if (isNumb)
                         {
-                            _Jobs.RemoveAt(int.Parse(ind));
+                            _jobs.RemoveAt(int.Parse(ind));
                             System.Console.WriteLine("Успешно удалено\n");
                             break;
                         }
