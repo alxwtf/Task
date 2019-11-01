@@ -4,15 +4,15 @@ namespace Task
 {
     class Job
     {
-        public Guid id;
-        public string Name;
+        public Guid id { get; set; }
+        public string Name { get; set; }
 
-        public string Description;
+        public string Description { get; set; }
 
-        public string Tag;
+        public string Tag { get; set; }
 
-        public DateTime CreationDate;
+        public DateTime CreationDate { get; set; }
 
-        public DateTime? Date;
+        public DateTime? Date { get; set; }
     }
 }
